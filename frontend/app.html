@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankur: build it, protect it, crew it</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="wordmark">Ankur<span class="dot">.</span></a>
+  <nav id="nav-actions"></nav>
+</header>
+
+<!-- AUTH VIEW -->
+<section id="view-auth" class="view">
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <button class="tab-btn active" data-tab="login">Log in</button>
+      <button class="tab-btn" data-tab="signup">Sign up</button>
+    </div>
+
+    <form id="form-login" class="auth-form">
+      <label>Email<input type="email" id="login-email" autocomplete="email" required></label>
+      <label>Password<input type="password" id="login-password" autocomplete="current-password" required></label>
+      <button type="submit" class="glow-ring">Log in</button>
+      <p class="form-msg" id="login-msg" role="status" aria-live="polite"></p>
+    </form>
+
+    <form id="form-signup" class="auth-form hidden">
+      <label>Name<input type="text" id="signup-name" required></label>
+      <label>Email<input type="email" id="signup-email" required></label>
+      <label>Password<input type="password" id="signup-password" autocomplete="new-password" required minlength="6"></label>
+      <label>I am a...
+        <select id="signup-role">
+          <option value="idea_owner">Idea Owner: I have a startup idea</option>
+          <option value="collaborator">Collaborator: I want to join one</option>
+        </select>
+      </label>
+      <button type="submit" class="glow-ring">Create account</button>
+      <p class="form-msg" id="signup-msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<!-- OWNER DASHBOARD -->
+<section id="view-owner" class="view hidden">
+  <div class="owner-grid">
+
+    <div class="panel" id="panel-idea">
+      <h2>Your idea</h2>
+      <form id="form-idea">
+        <label>Title<input type="text" id="idea-title" required></label>
+        <label>Problem statement <span class="hint">(shown publicly)</span>
+          <textarea id="idea-problem" rows="2" required></textarea>
+        </label>
+        <div class="row-2">
+          <label>Category <span class="hint">(public)</span><input type="text" id="idea-category" required placeholder="e.g. FinTech"></label>
+          <label>Industry <span class="hint">(public)</span><input type="text" id="idea-industry" required placeholder="e.g. Financial Services"></label>
+        </div>
+        <label>Brief detail <span class="hint">(short teaser, public)</span>
+          <textarea id="idea-brief" rows="2"></textarea>
+        </label>
+        <label>Full description <span class="hint">(private, owner only)</span>
+          <textarea id="idea-full" rows="4"></textarea>
+        </label>
+        <label>Visibility
+          <select id="idea-visibility">
+            <option value="private">Private: hidden from collaborators</option>
+            <option value="public">Public: open to applications</option>
+          </select>
+        </label>
+        <button type="submit" id="idea-save-btn" class="glow-ring">Save idea</button>
+        <p class="form-msg" id="idea-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="panel" id="panel-agent">
+      <h2>Your AI co-founder</h2>
+      <p class="panel-sub">One agent, scoped to your idea only.</p>
+      <div id="agent-thread" class="thread" aria-live="polite"></div>
+      <form id="form-agent-chat" class="chat-input">
+        <input type="text" id="agent-input" aria-label="Message your AI co-founder" placeholder="Ask anything about building this idea">
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <div class="panel" id="panel-patent">
+      <h2>Patent guidance (India)</h2>
+      <p class="panel-sub">Prior-art aware, IP India-linked first-pass analysis.</p>
+      <div id="patent-thread" class="thread" aria-live="polite"></div>
+      <form id="form-patent" class="chat-input">
+        <input type="text" id="patent-input" aria-label="Patent question" placeholder="Optional. Leave blank for a general analysis">
+        <button type="submit">Analyze</button>
+      </form>
+    </div>
+
+    <div class="panel" id="panel-applications">
+      <h2>Applications</h2>
+      <div id="applications-list" class="applications-list"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COLLABORATOR DASHBOARD -->
+<section id="view-collaborator" class="view hidden">
+  <div class="collab-grid">
+    <div class="panel">
+      <h2>Browse public ideas</h2>
+      <div class="filters">
+        <input type="text" id="filter-category" aria-label="Filter by category" placeholder="Filter by category">
+        <input type="text" id="filter-industry" aria-label="Filter by industry" placeholder="Filter by industry">
+        <button id="filter-btn">Filter</button>
+      </div>
+      <div id="ideas-list" class="ideas-list"></div>
+    </div>
+    <div class="panel">
+      <h2>Your applications</h2>
+      <div id="my-applications-list" class="applications-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY MODAL -->
+<div id="apply-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="apply-modal-title">
+  <div class="modal-card">
+    <h3 id="apply-modal-title">Apply to idea</h3>
+    <form id="form-apply">
+      <input type="hidden" id="apply-idea-id">
+      <label>Why you? <span class="hint">(short message)</span><textarea id="apply-message" rows="3"></textarea></label>
+      <label>Resume / portfolio links<textarea id="apply-resume" rows="3"></textarea></label>
+      <label>Contact info <span class="hint">(shared with owner only if approved)</span><input type="text" id="apply-contact"></label>
+      <div class="modal-actions">
+        <button type="button" id="apply-cancel">Cancel</button>
+        <button type="submit" class="glow-ring">Submit application</button>
+      </div>
+      <p class="form-msg" id="apply-msg"></p>
+    </form>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

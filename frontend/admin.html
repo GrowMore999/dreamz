@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin: Ankur</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .wrap { max-width: 760px; margin: 8vh auto; padding: 0 20px; }
+  .gate {
+    background: var(--paper-2); border: 1px solid var(--line); border-radius: 16px;
+    padding: 28px; max-width: 380px; margin: 12vh auto 0;
+  }
+  .gate input {
+    width: 100%; padding: 10px 11px; border: 1px solid var(--line); border-radius: 8px;
+    font-family: inherit; font-size: 14px; margin: 14px 0; background: #1B1B20; color: var(--ink);
+  }
+  .gate button, .refresh-btn {
+    width: 100%; background: var(--ink); color: #15130C; border: none; border-radius: 999px;
+    padding: 10px; font-weight: 600; cursor: pointer; font-family: inherit; font-size: 14px;
+  }
+  .gate button:hover, .refresh-btn:hover { background: var(--brass-deep); }
+  .gate .err { color: var(--danger); font-size: 13px; min-height: 18px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 22px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 14px; }
+  th { color: var(--ink-soft); font-weight: 600; font-size: 12.5px;  }
+  .role-tag { font-size: 11.5px; padding: 3px 9px; border-radius: 20px; border: 1px solid var(--line); }
+  .role-tag.idea_owner { color: var(--brass); }
+  .role-tag.collaborator { color: var(--ok); }
+  .count { color: var(--ink-soft); font-size: 14px; margin-top: 6px; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; }
+  .refresh-btn { width: auto; padding: 8px 16px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div id="gate-view" class="gate">
+    <h2 style="font-family:'Space Grotesk',sans-serif;">Admin access</h2>
+    <p style="color:var(--ink-soft); font-size:13.5px;">Enter your admin key to view signups.</p>
+    <input type="password" id="admin-key-input" placeholder="Admin key">
+    <button id="gate-submit">View signups</button>
+    <p class="err" id="gate-err"></p>
+  </div>
+
+  <div id="data-view" class="hidden" style="display:none;">
+    <div class="top-row">
+      <h2 style="font-family:'Space Grotesk',sans-serif;">Signups</h2>
+      <button class="refresh-btn" id="refresh-btn">Refresh</button>
+    </div>
+    <p class="count" id="user-count"></p>
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Email</th><th>Signed up as</th><th>Signed up</th></tr>
+      </thead>
+      <tbody id="users-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+  function esc(v) { return String(v == null ? "" : v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+  const gateView = document.getElementById("gate-view");
+  const dataView = document.getElementById("data-view");
+  const err = document.getElementById("gate-err");
+
+  async function loadUsers(key) {
+    err.textContent = "";
+    try {
+      const res = await fetch(`${API_BASE}/admin/users`, {
+        headers: { "X-Admin-Key": key }
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.detail || "Could not load signups");
+      }
+      const users = await res.json();
+      sessionStorage.setItem("admin_key", key);
+      renderUsers(users);
+      gateView.style.display = "none";
+      dataView.style.display = "block";
+    } catch (e) {
+      err.textContent = e.message;
+    }
+  }
+
+  function renderUsers(users) {
+    document.getElementById("user-count").textContent =
+      `${users.length} account${users.length === 1 ? "" : "s"} total`;
+    const tbody = document.getElementById("users-tbody");
+    tbody.innerHTML = users.map(u => `
+      <tr>
+        <td>${esc(u.name)}</td>
+        <td>${esc(u.email)}</td>
+        <td><span class="role-tag ${u.role}">${u.role === "idea_owner" ? "Idea Owner" : "Collaborator"}</span></td>
+        <td>${new Date(u.created_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}</td>
+      </tr>
+    `).join("");
+  }
+
+  document.getElementById("gate-submit").addEventListener("click", () => {
+    const key = document.getElementById("admin-key-input").value.trim();
+    if (key) loadUsers(key);
+  });
+  document.getElementById("admin-key-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") document.getElementById("gate-submit").click();
+  });
+  document.getElementById("refresh-btn").addEventListener("click", () => {
+    const key = sessionStorage.getItem("admin_key");
+    if (key) loadUsers(key);
+  });
+
+  const savedKey = sessionStorage.getItem("admin_key");
+  if (savedKey) loadUsers(savedKey);
+</script>
+
+</body>
+</html>

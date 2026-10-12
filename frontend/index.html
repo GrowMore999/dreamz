@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankur: build it, protect it, crew it</title>
+<meta name="description" content="An AI co-founder for one idea, Indian patent guidance, and collaborators you approve yourself.">
+<script>document.documentElement.className += " js";</script>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="landing.css">
+</head>
+<body class="landing">
+
+<header class="site-header">
+  <a href="index.html" class="wordmark" aria-label="Ankur home">Ankur<span class="dot">.</span></a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html" class="current" aria-current="page">Home</a>
+    <a href="app.html?intent=owner">Build</a>
+    <a href="app.html?intent=collaborate">Collaborate</a>
+    <a href="insights.html">Insights</a>
+  </nav>
+  <div class="site-auth">
+    <a href="app.html?intent=login" class="btn-ghost">Log in</a>
+    <a href="app.html?intent=signup" class="btn-solid glow-ring">Sign up</a>
+  </div>
+</header>
+
+<main>
+  <div class="shell">
+
+    <section class="hero">
+      <div class="hero-copy">
+        <h1><span>Build it. Protect it.</span><span>Crew it.</span></h1>
+        <p class="lede">An AI co-founder for one idea, Indian patent guidance, and collaborators you approve yourself.</p>
+        <div class="hero-ctas">
+          <a href="app.html?intent=owner" class="btn-solid btn-lg glow-ring">Start building</a>
+          <a href="app.html?intent=collaborate" class="btn-ghost btn-lg">Browse ideas</a>
+        </div>
+      </div>
+      <div class="hero-stage">
+        <div id="hero-3d" role="img" aria-label="Interactive 3D illustration: an idea grows from a seed while collaborators orbit it and are approved one at a time"></div>
+      </div>
+    </section>
+
+    <section class="facts" aria-label="Key facts">
+      <div class="fact"><strong>New to India</strong><span>No other platform here joins an AI co-founder, patent guidance and founder-approved collaboration.</span></div>
+      <div class="fact"><strong>One idea per account</strong><span>Your agent knows your idea and nothing else, so its advice stays specific.</span></div>
+      <div class="fact"><strong>You approve everyone</strong><span>No algorithm pairs you with a co-founder. Every collaborator is your call.</span></div>
+    </section>
+
+    <section class="audience">
+      <h2>Two people, two starting points.</h2>
+      <div class="toggle-row" id="audience-toggle" role="tablist" aria-label="Choose your starting point">
+        <button class="active" role="tab" aria-selected="true" data-panel="owner">I have an idea</button>
+        <button role="tab" aria-selected="false" data-panel="collaborate">I want to join one</button>
+      </div>
+
+      <div class="audience-panel active" id="panel-owner" role="tabpanel">
+        <div>
+          <h3>For the person carrying the idea</h3>
+          <p class="sub">The problem is clear in your head. A co-founder, a patent lawyer and a team are not.</p>
+          <a href="app.html?intent=owner" class="btn-solid glow-ring">Start building</a>
+        </div>
+        <div class="audience-list">
+          <p>An AI agent that only ever talks about your idea.</p>
+          <p>A first-pass patent analysis: what is patentable, what already exists, what to file first.</p>
+          <p>Keep it private while you shape it, or publish just the brief and review who applies.</p>
+        </div>
+      </div>
+
+      <div class="audience-panel" id="panel-collaborate" role="tabpanel">
+        <div>
+          <h3>For the person looking to join one</h3>
+          <p class="sub">You want to build something real with someone, not send fifty cold messages.</p>
+          <a href="app.html?intent=collaborate" class="btn-solid glow-ring">Browse ideas</a>
+        </div>
+        <div class="audience-list">
+          <p>Browse by problem, category and industry before anyone sees who you are.</p>
+          <p>Apply with a short note, your resume and how you would like to be reached.</p>
+          <p>The founder reviews you personally. Your details reach them only after they say yes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="differ">
+      <h2>Three things no one here does together.</h2>
+      <div class="bento">
+        <article class="cell cell-a reveal" data-tilt>
+          <h3>A co-founder that knows only your idea</h3>
+          <p>One agent per idea. It never mixes in anyone else's startup, so advice stays specific to what you are building.</p>
+        </article>
+        <article class="cell cell-b reveal" data-tilt>
+          <h3>Patent guidance for Indian law</h3>
+          <p>Section 3(k) checks, prior art leads and filing steps, including DPIIT and SIPP support.</p>
+        </article>
+        <article class="cell cell-c reveal" data-tilt>
+          <h3>Collaboration you control</h3>
+          <p>Applicants see the brief. You approve each person yourself, and only then see their details.</p>
+        </article>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="why">
+    <div class="shell">
+      <p>India has no shortage of founders with a real idea. It lacks a place that helps build the idea, protect it under Indian law and find the right people for it, without handing those choices to an algorithm.</p>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="shell">
+      <h2>Bring the idea.</h2>
+      <div class="closing-actions">
+        <a href="app.html?intent=owner" class="btn-solid btn-lg glow-ring">Start building</a>
+        <a href="app.html?intent=collaborate" class="btn-ghost btn-lg">Browse ideas</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div>Ankur. Built in India, for Indian founders.</div>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="app.html?intent=owner">Build</a>
+      <a href="app.html?intent=collaborate">Collaborate</a>
+      <a href="insights.html">Insights</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="hero3d.js" defer></script>
+<script src="landing.js" defer></script>
+</body>
+</html>
